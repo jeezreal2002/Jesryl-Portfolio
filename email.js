@@ -39,8 +39,8 @@ function sendEmail(event){
     
     // Create template parameters
     const templateParams = {
-        from_name: nameInput.value,
-        from_email: emailInput.value,
+        name: nameInput.value,
+        email: emailInput.value,
         message: messageInput.value,
         time: new Date().toLocaleString()
     };

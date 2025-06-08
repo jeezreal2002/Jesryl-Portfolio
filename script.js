@@ -271,49 +271,27 @@ function initProjectSection() {
   const projectPanels = document.querySelectorAll('.project-panel');
   let activePanel = null;
   
-  // Add hover effects for smoother transitions
+  // Check if device is mobile/small screen
+  const isMobileView = () => window.innerWidth <= 768;
+  
   projectPanels.forEach(panel => {
     // Initial setup
     const header = panel.querySelector('.project-panel-header');
     const content = panel.querySelector('.project-panel-content');
     const inner = panel.querySelector('.project-panel-inner');
     
-    // Add mouse enter/leave for enhanced hover effects
-    panel.addEventListener('mouseenter', () => {
-      panel.classList.add('hover');
-      
-      // Apply subtle animations to child elements
-      const projectNumber = panel.querySelector('.project-number');
-      const projectTitle = panel.querySelector('.project-title');
-      const tags = panel.querySelectorAll('.project-tags span');
-      
-      if (projectNumber) {
-        projectNumber.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease';
-      }
-      
-      if (projectTitle) {
-        projectTitle.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease';
-      }
-      
-      tags.forEach((tag, index) => {
-        tag.style.transition = `transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 0.05}s, background-color 0.3s ease, color 0.3s ease`;
-      });
-    });
+    // Set initial height to 0
+    content.style.height = '0px';
     
-    panel.addEventListener('mouseleave', () => {
-      if (!panel.classList.contains('active')) {
-        panel.classList.remove('hover');
-      }
-    });
-    
-    // Click event for expanding/collapsing
-    header.addEventListener('click', () => {
+    // Add click event for panel headers (always active)
+    header.addEventListener('click', (e) => {
       const isActive = panel.classList.contains('active');
       
-      // Close other open panels
+      // Close other panels first
       projectPanels.forEach(otherPanel => {
         if (otherPanel !== panel && otherPanel.classList.contains('active')) {
           otherPanel.classList.remove('active');
+          otherPanel.classList.remove('hover');
           otherPanel.querySelector('.project-panel-content').style.height = '0px';
         }
       });
@@ -321,30 +299,74 @@ function initProjectSection() {
       // Toggle current panel
       if (isActive) {
         panel.classList.remove('active');
+        panel.classList.remove('hover');
         content.style.height = '0px';
         activePanel = null;
       } else {
         panel.classList.add('active');
+        panel.classList.add('hover');
         content.style.height = inner.offsetHeight + 'px';
         activePanel = panel;
         
         // Smooth scroll to panel if not in view
         const panelRect = panel.getBoundingClientRect();
+        const headerHeight = document.querySelector('#main-header').offsetHeight;
         const isInView = (
-          panelRect.top >= 0 &&
+          panelRect.top >= headerHeight &&
           panelRect.bottom <= window.innerHeight
         );
         
         if (!isInView) {
-          const headerHeight = document.querySelector('#main-header').offsetHeight;
           const scrollPosition = panel.offsetTop - headerHeight - 20;
-          
           window.scrollTo({
             top: scrollPosition,
             behavior: 'smooth'
           });
         }
       }
+      
+      // Prevent event propagation
+      e.stopPropagation();
+    });
+    
+    // Only add hover events on desktop
+    if (!('ontouchstart' in window)) {
+      panel.addEventListener('mouseenter', () => {
+        // Only use hover effect on desktop views
+        if (!isMobileView() && !panel.classList.contains('active')) {
+          panel.classList.add('hover');
+          
+          // Apply subtle animations to child elements
+          const projectNumber = panel.querySelector('.project-number');
+          const projectTitle = panel.querySelector('.project-title');
+          const tags = panel.querySelectorAll('.project-tags span');
+          
+          if (projectNumber) {
+            projectNumber.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease';
+          }
+          
+          if (projectTitle) {
+            projectTitle.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease';
+          }
+          
+          tags.forEach((tag, index) => {
+            tag.style.transition = `transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 0.05}s, background-color 0.3s ease, color 0.3s ease`;
+          });
+        }
+      });
+      
+      panel.addEventListener('mouseleave', () => {
+        if (!panel.classList.contains('active')) {
+          panel.classList.remove('hover');
+        }
+      });
+    }
+    
+    // Prevent link clicks from closing the panel
+    panel.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
     });
   });
   
@@ -357,85 +379,3 @@ function initProjectSection() {
     }
   });
 }
-
-// Project Accordion Functionality
-document.addEventListener('DOMContentLoaded', () => {
-  const projectPanels = document.querySelectorAll('.project-panel');
-  let isTouchDevice = false;
-  
-  // Detect touch device
-  window.addEventListener('touchstart', function onFirstTouch() {
-    isTouchDevice = true;
-    window.removeEventListener('touchstart', onFirstTouch);
-  });
-  
-  projectPanels.forEach(panel => {
-    const content = panel.querySelector('.project-panel-content');
-    const inner = panel.querySelector('.project-panel-inner');
-    const header = panel.querySelector('.project-panel-header');
-    
-    // Set initial height to 0
-    content.style.height = '0px';
-    
-    // Add hover event listener for desktop
-    panel.addEventListener('mouseenter', () => {
-      // Update height on hover
-      panel.classList.add('active');
-      content.style.height = inner.offsetHeight + 'px';
-    });
-    
-    panel.addEventListener('mouseleave', () => {
-      // Close all panels on mouse leave
-      panel.classList.remove('active');
-      content.style.height = '0px';
-    });
-    
-    // Add click event to close panel
-    panel.addEventListener('click', () => {
-      if (panel.classList.contains('active')) {
-        panel.classList.remove('active');
-        content.style.height = '0px';
-      }
-    });
-    
-    // Prevent link clicks from closing the panel
-    panel.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.stopPropagation();
-      });
-    });
-    
-    // Add touch support for mobile
-    header.addEventListener('touchstart', () => {
-      if (isTouchDevice) {
-        // Close all other panels first
-        projectPanels.forEach(otherPanel => {
-          if (otherPanel !== panel && otherPanel.classList.contains('active')) {
-            otherPanel.classList.remove('active');
-            otherPanel.querySelector('.project-panel-content').style.height = '0px';
-          }
-        });
-        
-        // Toggle current panel
-        if (panel.classList.contains('active')) {
-          panel.classList.remove('active');
-          content.style.height = '0px';
-        } else {
-          panel.classList.add('active');
-          content.style.height = inner.offsetHeight + 'px';
-        }
-      }
-    });
-  });
-  
-  // Update heights on window resize
-  window.addEventListener('resize', () => {
-    projectPanels.forEach(panel => {
-      if (panel.classList.contains('active')) {
-        const content = panel.querySelector('.project-panel-content');
-        const inner = panel.querySelector('.project-panel-inner');
-        content.style.height = inner.offsetHeight + 'px';
-      }
-    });
-  });
-});

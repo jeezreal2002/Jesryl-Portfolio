@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="style.css" />
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <title>Jesryl Palmes - Front-End Developer</title>
+  </head>
+  <body>
+    <!-- Header -->
+    <main>
+    <header id="main-header" data-aos="fade-down" data-aos-delay="200">
+      <div class="container">
+        <!-- Logo -->
+        <div class="logo">
+          <a href="#" id="logo">JEEZREAL.</a>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <nav class="desktop-nav">
+          <ul>
+            <li><a href="#about" class="nav-link">About</a></li>
+            <li><a href="#project" class="nav-link">Projects</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
+          </ul>
+        </nav>
+        
+        <!-- CTA Button -->
+        <div class="cta-button">
+          <a href="#contact">Available for work</a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" id="mobile-menu-btn">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+      
+      <!-- Mobile Navigation -->
+      <div class="mobile-nav" id="mobile-nav">
+        <nav>
+          <ul>
+            <li><a href="#about" class="nav-link">About</a></li>
+            <li><a href="#project" class="nav-link">Projects</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
+            <li class="mobile-cta"><a href="#contact">Available for work</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="container">
+        <div class="content">
+          <div class="shape-1"></div>
+          <div class="shape-2"></div>
+          <div class="line"></div>
+
+          <div class="text">
+            <h1 class="row-1">FRONT-END</h1>
+            <h1 class="row-2">DEVELOPMENT</h1>
+            <h1 class="row-3">ENTHUSIAST</h1>
+          </div>
+
+          <a href="#about">
+            <box-icon name="chevron-down" class="arrow"></box-icon>
+          </a>
+
+          <div class="short-info">
+            <div class="left-side">
+              <h1>Based in Bago City, Philippines</h1>
+              <p class="time"></p>
+            </div>
+
+            <div class="right-side">
+              <p>Status</p>
+              <h1>
+                <div class="pulse"></div>
+                LEARNING & GROWING
+              </h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <!-- Floating particles -->
+        <div class="particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+
+        <div class="container">
+            <div class="content">
+                <div class="main-content">
+                    <!-- Left column: About title -->
+                    <div class="about-title" data-aos="fade-right">
+                        <h2>About</h2>
+                        <h1>ME.</h1>
+                        <button onclick="document.getElementById('project').scrollIntoView({behavior: 'smooth'})">View Projects <box-icon class="arrow" name='arrow-back'></box-icon></button>
+                    </div>
+                    
+                    <!-- Center column: Profile image -->
+                    <div class="profile-container" data-aos="fade-up">
+                        <div class="corner-decoration top-left"></div>
+                        <div class="profile">
+                            <img src="assets/profile1.jpg" alt="profile">
+                        </div>
+                        <div class="corner-decoration bottom-right"></div>
+                    </div>
+                    
+                    <!-- Right column: Description -->
+                    <div class="about-description" data-aos="fade-left">
+                        <div class="highlight-box">
+                            <p>Hi! I'm Jesryl Palmes, a front-end web development enthusiast from Bago City.
+                              I enjoy building clean, responsive, and user-friendly websites using HTML, CSS, and JavaScript. I'm passionate about turning designs into functional and interactive web pages, and I'm always eager to learn new tools and techniques to improve my skills.</p>
+                        </div>
+                        
+                        <!-- Tech icons -->
+                        <h3 class="tech-title">Technologies & Languages</h3>
+                        <div class="tech-icons">
+                            <div class="tech-icon">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
+                            </div>
+                            <div class="tech-icon">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
+                            </div>
+                            <div class="tech-icon">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
+                            </div>
+                            <div class="tech-icon">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original-wordmark.svg" alt="Tailwind CSS">
+                            </div>
+                            <div class="tech-icon">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap">
+                            </div>
+                            <div class="tech-icon">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
+                            </div>
+                            <div class="tech-icon">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP">
+                            </div>
+                            <div class="tech-icon">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" alt="C#">
+                            </div>
+                            <div class="tech-icon">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-wrapper" data-aos="zoom-in">
+                    <div class="text">
+                        <h1>JEEZREAL <span>PORTFOLIO</span></h1>
+                        <h1>JEEZREAL <span>PORTFOLIO</span></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="project" id="project">
+      <div class="container">
+        <div class="project-header">
+          <div class="section-title">
+            <span>PROJECTS</span>
+            <h2>Selected Work</h2>
+            <div class="title-bar"></div>
+          </div>
+          <p class="section-subtitle">Explore my recent projects and discover my technical skills and creative approach.</p>
+        </div>
+        
+        <div class="project-accordion">
+          <!-- Project 1 -->
+          <div class="project-panel">
+            <div class="project-panel-header">
+              <div class="project-number">01</div>
+              <h3 class="project-title">Job Portal</h3>
+              <div class="project-tags">
+                <span>PHP</span>
+                <span>JavaScript</span>
+                <span>MySQL</span>
+              </div>
+              <div class="project-expand">
+                <div class="expand-icon">
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+            <div class="project-panel-content">
+              <div class="project-panel-inner">
+                <div class="project-image">
+                  <img src="assets/caps.png" alt="Job Portal Capstone Project">
+                </div>
+                <div class="project-details">
+                  <p>A comprehensive job portal capstone project with employer and job seeker interfaces, job listings, and application management features.</p>
+                  <div class="project-features">
+                    <h4>Key Features</h4>
+                    <ul>
+                      <li>User authentication and role management</li>
+                      <li>Job posting and application system</li>
+                      <li>Advanced search and filtering</li>
+                      <li>Responsive dashboard interfaces</li>
+                    </ul>
+                  </div>
+                  <div class="project-links">
+                    <a href="https://bagocitydigitaljobportal.bccbsis.com/capstone/" class="primary-btn" target="_blank">Visit Website</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Project 2 -->
+          <div class="project-panel">
+            <div class="project-panel-header">
+              <div class="project-number">02</div>
+              <h3 class="project-title">Penguin Sales And Services</h3>
+              <div class="project-tags">
+                <span>HTML</span>
+                <span>CSS</span>
+                <span>JavaScript</span>
+              </div>
+              <div class="project-expand">
+                <div class="expand-icon">
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+            <div class="project-panel-content">
+              <div class="project-panel-inner">
+                <div class="project-image">
+              <img src="assets/penguinSalesAndServices.png" alt="Penguin Sales And Services">
+                </div>
+                <div class="project-details">
+                <p>A business website for a computer sales and services company with product listings, service information, and contact details for customer inquiries.</p>
+                  <div class="project-features">
+                    <h4>Key Features</h4>
+                    <ul>
+                      <li>Responsive design for all devices</li>
+                      <li>Custom animations and transitions</li>
+                      <li>Interactive UI elements</li>
+                      <li>Optimized performance</li>
+                    </ul>
+                  </div>
+
+                  <div class="project-links">
+                    <a href="https://palmes-penguin.vercel.app/index.html" class="primary-btn" target="_blank">Visit Website</a>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+            
+          <!-- Project 3 -->
+          <div class="project-panel">
+            <div class="project-panel-header">
+              <div class="project-number">03</div>
+              <h3 class="project-title">Dashboard Interface</h3>
+              <div class="project-tags">
+                <span>HTML</span>
+                <span>CSS</span>
+                <span>JavaScript</span>
+                <span>Chart.js</span>
+              </div>
+              <div class="project-expand">
+                <div class="expand-icon">
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+            <div class="project-panel-content">
+              <div class="project-panel-inner">
+                <div class="project-image">
+              <img src="assets/project-3.webp" alt="Dashboard App">
+                </div>
+                <div class="project-details">
+                <p>An admin dashboard interface with interactive charts, data visualization, and user management features.</p>
+                  <div class="project-features">
+                    <h4>Key Features</h4>
+                    <ul>
+                      <li>Real-time data visualization</li>
+                      <li>Interactive charts and graphs</li>
+                      <li>User management system</li>
+                      <li>Customizable dashboard widgets</li>
+                    </ul>
+                  </div>
+                  <div class="project-tools">
+                    <h4>Tools & Technologies</h4>
+                    <div class="tools-list">
+                      <span>HTML5</span>
+                      <span>CSS3</span>
+                      <span>JavaScript</span>
+                      <span>Chart.js</span>
+                      <span>Bootstrap</span>
+                      <span>AJAX</span>
+                    </div>
+                  </div>
+                  <div class="project-links">
+                    <a href="#" class="primary-btn" target="_blank">View Demo</a>
+                    <a href="#" class="secondary-btn">View Code</a>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+            
+          <!-- Project 4 -->
+          <div class="project-panel">
+            <div class="project-panel-header">
+              <div class="project-number">04</div>
+              <h3 class="project-title">Landing Page</h3>
+              <div class="project-tags">
+                <span>HTML</span>
+                <span>CSS</span>
+                <span>JavaScript</span>
+              </div>
+              <div class="project-expand">
+                <div class="expand-icon">
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+            <div class="project-panel-content">
+              <div class="project-panel-inner">
+                <div class="project-image">
+              <img src="assets/project-4.webp" alt="Landing Page">
+                </div>
+                <div class="project-details">
+                <p>A high-conversion landing page with animated sections, testimonials, and call-to-action elements.</p>
+                  <div class="project-features">
+                    <h4>Key Features</h4>
+                    <ul>
+                      <li>Optimized for conversions</li>
+                      <li>Engaging animations</li>
+                      <li>Mobile-first approach</li>
+                      <li>Fast loading performance</li>
+                    </ul>
+                  </div>
+                  <div class="project-tools">
+                    <h4>Tools & Technologies</h4>
+                    <div class="tools-list">
+                      <span>HTML5</span>
+                      <span>CSS3</span>
+                      <span>JavaScript</span>
+                      <span>GSAP</span>
+                      <span>Figma</span>
+                    </div>
+                  </div>
+                  <div class="project-links">
+                    <a href="#" class="primary-btn" target="_blank">View Project</a>
+                    <a href="#" class="secondary-btn">View Code</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="more-projects">
+          <p>Want to see more of my work?</p>
+          <a href="#" class="view-all-btn">View All Projects</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="container">
+        <div class="content">
+          <div class="title" data-aos="fade-down">
+            <h2>LET'S</h2>
+            <h1>CONNECT</h1>
+          </div>
+
+          <div class="contact-area">
+            <div data-aos="fade-right" class="left-side">
+              <h1>LET'S START</h1>
+              <h1>OUR STORY</h1>
+              <h1>TOGETHER</h1>
+            </div>
+
+            <div class="right-side" data-aos="fade-left">
+              <form onsubmit="sendEmail(event)">
+                <div class="input-group">
+                  <input type="text" id="name" placeholder="YOUR NAME">
+                </div>
+                <div class="input-group">
+                  <input type="email" id="email" placeholder="YOUR EMAIL ADDRESS">
+                </div>
+                <div class="input-group">
+                  <textarea id="message" placeholder="WHAT CAN I HELP YOU WITH?"></textarea>
+                </div>
+                <button type="submit">SEND MESSAGE</button>
+              </form>
+              
+              <!-- Toast Notification -->
+              <div class="toast-notification" id="toast-notification">
+                <div class="toast-icon">
+                  <div class="toast-icon-success">✓</div>
+                  <div class="toast-icon-error">×</div>
+                  <div class="toast-icon-loading">
+                    <div class="loading-spinner"></div>
+                  </div>
+                </div>
+                <div class="toast-content">
+                  <p class="toast-message" id="toast-message">Message sent successfully!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="content"> 
+          <h1>JEEZREAL PORTFOLIO</h1>
+          <div class="social">
+            <a href="https://www.facebook.com/jesryl.palmes/" class="logo" target="_blank">
+              <box-icon name='facebook-square' type='logo'></box-icon>
+            </a>
+            <a href="https://www.instagram.com/jesrylpalmes/" class="logo" target="_blank">
+              <box-icon name='instagram' type='logo'></box-icon>
+            </a>
+            <a href="https://github.com/jeezreal2002" class="logo" target="_blank">
+              <box-icon name='github' type='logo'></box-icon>
+            </a>
+          </div>
+          <div class="copyright">
+            <p>&copy; Jeezreal <span id="year"></span>. All Rights Reserved</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+
+    <!-- Box Icon -->
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+
+    <!-- AOS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 1000,
+        once: false,
+        mirror: true
+      });
+    </script>
+
+
+<!-- EmailJS -->
+
+    <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+      (function(){
+          emailjs.init({
+              publicKey: "Zb5HWUhPBqrFNJVwD",
+          });
+      })();
+  </script>
+
+
+<script src="email.js"></script>
+  </body>
+</html>

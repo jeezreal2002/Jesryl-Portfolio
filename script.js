@@ -2,7 +2,120 @@
 let lastScrollTop = 0;
 const timeText = document.querySelector(".time");
 
+// Preloader functionality
+function initPreloader() {
+  const preloader = document.getElementById('preloader');
+  const progressFill = document.querySelector('.progress-fill');
+  const progressPercentage = document.querySelector('.progress-percentage');
+  const startButtonContainer = document.getElementById('start-button-container');
+  const startBtn = document.getElementById('start-btn');
+  
+  if (!preloader || !progressFill || !progressPercentage || !startButtonContainer || !startBtn) return;
+  
+  let progress = 0;
+  const duration = 5000; // 5 seconds (slower)
+  const interval = 50; // Update every 50ms
+  const increment = (100 / (duration / interval));
+  
+  // Start the progress animation
+  const progressTimer = setInterval(() => {
+    progress += increment;
+    
+    if (progress >= 100) {
+      progress = 100;
+      clearInterval(progressTimer);
+      
+      // Hide progress elements and show start button
+      setTimeout(() => {
+        // Fade out progress elements
+        document.querySelector('.progress-container').style.opacity = '0';
+        document.querySelector('.loading-text').style.opacity = '0';
+        
+        // Show start button after a brief delay
+        setTimeout(() => {
+          startButtonContainer.classList.add('show');
+        }, 400);
+      }, 500);
+    }
+    
+    // Update progress bar and percentage
+    progressFill.style.width = progress + '%';
+    progressPercentage.textContent = Math.round(progress) + '%';
+  }, interval);
+  
+  // Handle start button click
+  startBtn.addEventListener('click', () => {
+    // Add loading state to button
+    startBtn.style.transform = 'scale(0.95)';
+    startBtn.style.opacity = '0.8';
+    
+    // Fade out preloader
+    setTimeout(() => {
+      preloader.classList.add('fade-out');
+      
+      // Remove preloader from DOM after fade animation
+      setTimeout(() => {
+        preloader.remove();
+        // Enable scroll
+        document.body.style.overflow = '';
+        
+        // Start portfolio entrance animation
+        startPortfolioAnimation();
+      }, 800);
+    }, 200);
+  });
+  
+  // Disable scroll during preloader
+  document.body.style.overflow = 'hidden';
+  
+  // Also handle if all resources are loaded before timer completes
+  window.addEventListener('load', () => {
+    // If progress is less than 90%, speed it up
+    if (progress < 90) {
+      progress = 90;
+    }
+  });
+}
+
+// Portfolio entrance animation sequence
+function startPortfolioAnimation() {
+  const header = document.getElementById('main-header');
+  const hero = document.querySelector('.hero');
+  const mainContentSections = document.querySelectorAll('.main-content-section');
+  
+  // Start header animation
+  if (header) {
+    setTimeout(() => {
+      header.classList.add('fade-in');
+    }, 100);
+  }
+  
+  // Start hero section animation
+  if (hero) {
+    setTimeout(() => {
+      hero.classList.add('fade-in');
+    }, 300);
+  }
+  
+  // Animate main content sections with staggered timing
+  mainContentSections.forEach((section, index) => {
+    setTimeout(() => {
+      section.classList.add('fade-in');
+    }, 800 + (index * 200)); // Start after hero, with 200ms delay between sections
+  });
+  
+  // Re-initialize AOS after animations
+  setTimeout(() => {
+    if (typeof AOS !== 'undefined') {
+      AOS.refresh();
+    }
+  }, 2000);
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+  // Initialize preloader first
+  initPreloader();
+  
   // Initialize all functionality
   initNavigation();
   initDateTimeDisplay();
@@ -10,12 +123,20 @@ document.addEventListener('DOMContentLoaded', function() {
   initActiveLinks();
   initMarqueeText();
   initProjectSection();
+  initTypingEffect();
+  initSkillsAnimation();
+  initStatsAnimation();
+  initEnhancedContactForm();
+  initScrollToTop();
   
   // Set initial active state for menu items
   setActiveMenuItemOnLoad();
   
   // Ensure marquee is visible if about section is initially in view
   ensureMarqueeVisibility();
+  
+  // Add smooth scroll to all anchor links
+  initSmoothScrolling();
 });
 
 // Set active menu item based on current section
@@ -377,5 +498,251 @@ function initProjectSection() {
       const inner = activePanel.querySelector('.project-panel-inner');
       content.style.height = inner.offsetHeight + 'px';
     }
+  });
+}
+
+// Initialize typing effect for hero section
+function initTypingEffect() {
+  const typingText = document.getElementById('typing-text');
+  if (!typingText) return;
+  
+  const words = ['FRONTEND', 'UI/UX', 'RESPONSIVE'];
+  let currentWordIndex = 0;
+  let currentCharIndex = 0;
+  let isDeleting = false;
+  
+  function typeWord() {
+    const currentWord = words[currentWordIndex];
+    
+    if (isDeleting) {
+      typingText.textContent = currentWord.substring(0, currentCharIndex - 1);
+      currentCharIndex--;
+    } else {
+      typingText.textContent = currentWord.substring(0, currentCharIndex + 1);
+      currentCharIndex++;
+    }
+    
+    let typeSpeed = isDeleting ? 50 : 100;
+    
+    if (!isDeleting && currentCharIndex === currentWord.length) {
+      typeSpeed = 2000; // Pause at end
+      isDeleting = true;
+    } else if (isDeleting && currentCharIndex === 0) {
+      isDeleting = false;
+      currentWordIndex = (currentWordIndex + 1) % words.length;
+      typeSpeed = 500; // Pause before next word
+    }
+    
+    setTimeout(typeWord, typeSpeed);
+  }
+  
+  // Start typing animation
+  setTimeout(typeWord, 1000);
+}
+
+// Initialize skills section animations
+function initSkillsAnimation() {
+  const skillTags = document.querySelectorAll('.skill-tag');
+  
+  if (!skillTags.length) return;
+  
+  // Create intersection observer for skill tags
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.style.animation = 'fadeInUp 0.5s ease forwards';
+        }, index * 50);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+  
+  // Observe all skill tags
+  skillTags.forEach(tag => {
+    tag.style.opacity = '0';
+    observer.observe(tag);
+  });
+}
+
+// Initialize smooth scrolling for all anchor links
+function initSmoothScrolling() {
+  const links = document.querySelectorAll('a[href^="#"]');
+  
+  links.forEach(link => {
+    link.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      
+      // Skip if it's just "#"
+      if (href === '#') return;
+      
+      e.preventDefault();
+      
+      const targetId = href.substring(1);
+      const targetElement = document.getElementById(targetId);
+      
+      if (targetElement) {
+        const headerHeight = document.querySelector('#main-header').offsetHeight;
+        const targetPosition = targetElement.offsetTop - headerHeight - 20;
+        
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+        
+        // Update URL without jumping
+        history.pushState(null, null, href);
+      }
+    });
+  });
+}
+
+// Initialize stats animation
+function initStatsAnimation() {
+  const statNumbers = document.querySelectorAll('.stat-number');
+  
+  if (!statNumbers.length) return;
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const target = parseInt(entry.target.getAttribute('data-count'));
+        const duration = 2000; // Animation duration in ms
+        const start = performance.now();
+        
+        function updateNumber(currentTime) {
+          const elapsed = currentTime - start;
+          const progress = Math.min(elapsed / duration, 1);
+          
+          // Easing function for smooth animation
+          const easedProgress = 1 - Math.pow(1 - progress, 3);
+          const current = Math.floor(easedProgress * target);
+          
+          entry.target.textContent = current.toLocaleString();
+          
+          if (progress < 1) {
+            requestAnimationFrame(updateNumber);
+          } else {
+            entry.target.textContent = target.toLocaleString();
+          }
+        }
+        
+        requestAnimationFrame(updateNumber);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  
+  statNumbers.forEach(stat => observer.observe(stat));
+}
+
+// Initialize enhanced contact form
+function initEnhancedContactForm() {
+  const form = document.getElementById('contact-form');
+  const inputs = form.querySelectorAll('input, textarea, select');
+  const submitBtn = document.getElementById('submit-btn');
+  
+  // Add dynamic label animations
+  inputs.forEach(input => {
+    input.addEventListener('focus', () => {
+      input.parentElement.classList.add('focused');
+    });
+    
+    input.addEventListener('blur', () => {
+      if (!input.value) {
+        input.parentElement.classList.remove('focused');
+        input.parentElement.classList.remove('has-value');
+      } else {
+        input.parentElement.classList.add('has-value');
+      }
+    });
+    
+    // Check initial values
+    if (input.value) {
+      input.parentElement.classList.add('has-value');
+    }
+  });
+  
+  // Enhanced form validation
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Add loading state
+    submitBtn.classList.add('loading');
+    submitBtn.disabled = true;
+    
+    // Simulate form submission (replace with actual email sending logic)
+    setTimeout(() => {
+      submitBtn.classList.remove('loading');
+      submitBtn.disabled = false;
+      
+      // Show success message (you can integrate with your existing email system)
+      showToast('Message sent successfully!', 'success');
+      form.reset();
+      
+      // Reset form states
+      inputs.forEach(input => {
+        input.parentElement.classList.remove('focused', 'has-value');
+      });
+    }, 2000);
+  });
+}
+
+// Helper function for toast notifications
+function showToast(message, type = 'success') {
+  const toast = document.getElementById('toast-notification');
+  const toastMessage = document.getElementById('toast-message');
+  
+  if (toast && toastMessage) {
+    toastMessage.textContent = message;
+    toast.className = `toast-notification show ${type}`;
+    
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 4000);
+  }
+}
+
+// Add fade in up animation for reuse
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`;
+document.head.appendChild(style);
+
+// Initialize scroll to top functionality
+function initScrollToTop() {
+  const scrollToTopBtn = document.getElementById('scroll-to-top');
+  
+  if (!scrollToTopBtn) return;
+  
+  // Show/hide button based on scroll position
+  window.addEventListener('scroll', function() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    if (scrollTop > 300) { // Show button after scrolling 300px
+      scrollToTopBtn.classList.add('visible');
+    } else {
+      scrollToTopBtn.classList.remove('visible');
+    }
+  });
+  
+  // Scroll to top when button is clicked
+  scrollToTopBtn.addEventListener('click', function() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   });
 }

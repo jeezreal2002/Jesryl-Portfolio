@@ -1197,7 +1197,7 @@ header .container {
 
 .hero .container .content .arrow {
   position: absolute;
-  bottom: -10rem;
+  bottom: -7rem;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -1236,7 +1236,7 @@ header .container {
 
 .hero .container .content .short-info {
   position: absolute;
-  bottom: -10rem;
+  bottom: -8rem;
   width: 100%;
   display: flex;
   justify-content: space-between;

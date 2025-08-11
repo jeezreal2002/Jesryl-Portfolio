@@ -2,81 +2,6 @@
 let lastScrollTop = 0;
 const timeText = document.querySelector(".time");
 
-// Preloader functionality
-function initPreloader() {
-  const preloader = document.getElementById('preloader');
-  const progressFill = document.querySelector('.progress-fill');
-  const progressPercentage = document.querySelector('.progress-percentage');
-  const startButtonContainer = document.getElementById('start-button-container');
-  const startBtn = document.getElementById('start-btn');
-  
-  if (!preloader || !progressFill || !progressPercentage || !startButtonContainer || !startBtn) return;
-  
-  let progress = 0;
-  const duration = 5000; // 5 seconds (slower)
-  const interval = 50; // Update every 50ms
-  const increment = (100 / (duration / interval));
-  
-  // Start the progress animation
-  const progressTimer = setInterval(() => {
-    progress += increment;
-    
-    if (progress >= 100) {
-      progress = 100;
-      clearInterval(progressTimer);
-      
-      // Hide progress elements and show start button
-      setTimeout(() => {
-        // Fade out progress elements
-        document.querySelector('.progress-container').style.opacity = '0';
-        document.querySelector('.loading-text').style.opacity = '0';
-        
-        // Show start button after a brief delay
-        setTimeout(() => {
-          startButtonContainer.classList.add('show');
-        }, 400);
-      }, 500);
-    }
-    
-    // Update progress bar and percentage
-    progressFill.style.width = progress + '%';
-    progressPercentage.textContent = Math.round(progress) + '%';
-  }, interval);
-  
-  // Handle start button click
-  startBtn.addEventListener('click', () => {
-    // Add loading state to button
-    startBtn.style.transform = 'scale(0.95)';
-    startBtn.style.opacity = '0.8';
-    
-    // Fade out preloader
-    setTimeout(() => {
-      preloader.classList.add('fade-out');
-      
-      // Remove preloader from DOM after fade animation
-      setTimeout(() => {
-        preloader.remove();
-        // Enable scroll
-        document.body.style.overflow = '';
-        
-        // Start portfolio entrance animation
-        startPortfolioAnimation();
-      }, 800);
-    }, 200);
-  });
-  
-  // Disable scroll during preloader
-  document.body.style.overflow = 'hidden';
-  
-  // Also handle if all resources are loaded before timer completes
-  window.addEventListener('load', () => {
-    // If progress is less than 90%, speed it up
-    if (progress < 90) {
-      progress = 90;
-    }
-  });
-}
-
 // Portfolio entrance animation sequence
 function startPortfolioAnimation() {
   const header = document.getElementById('main-header');
@@ -94,6 +19,19 @@ function startPortfolioAnimation() {
   if (hero) {
     setTimeout(() => {
       hero.classList.add('fade-in');
+      
+      // Add mouse movement effect for grid overlay
+      const gridOverlay = document.querySelector('.grid-overlay');
+      if (gridOverlay) {
+        document.addEventListener('mousemove', (e) => {
+          const x = (e.clientX / window.innerWidth) * 100;
+          const y = (e.clientY / window.innerHeight) * 100;
+          
+          // Update CSS variables for the grid glow effect
+          gridOverlay.style.setProperty('--mouse-x', `${x}%`);
+          gridOverlay.style.setProperty('--mouse-y', `${y}%`);
+        });
+      }
     }, 300);
   }
   
@@ -113,8 +51,8 @@ function startPortfolioAnimation() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Initialize preloader first
-  initPreloader();
+  // Start portfolio entrance animation
+  startPortfolioAnimation();
   
   // Initialize all functionality
   initNavigation();
@@ -361,28 +299,16 @@ function updateTime() {
 
 // Ensure marquee visibility on page load
 function ensureMarqueeVisibility() {
-  const aboutSection = document.querySelector('.about');
-  const textWrapper = document.querySelector('.about .text-wrapper');
+  const marqueeSection = document.querySelector('.marquee-section');
+  const textWrapper = document.querySelector('.marquee-section .text-wrapper');
   
-  if (aboutSection && textWrapper) {
-    const aboutRect = aboutSection.getBoundingClientRect();
+  if (marqueeSection && textWrapper) {
+    const marqueeRect = marqueeSection.getBoundingClientRect();
     const viewportHeight = window.innerHeight;
     
-    if (aboutRect.top < viewportHeight + 200 && aboutRect.bottom > -200) {
+    if (marqueeRect.top < viewportHeight + 200 && marqueeRect.bottom > -200) {
       textWrapper.style.opacity = '1';
       textWrapper.style.visibility = 'visible';
-      
-      // Apply different styles based on screen size
-      if (window.innerWidth <= 768) {
-        // Mobile styles
-        textWrapper.style.transform = 'rotate(0)';
-        textWrapper.style.position = 'relative';
-        textWrapper.style.bottom = '0';
-      } else {
-        // Desktop styles
-        textWrapper.style.transform = 'rotate(-1.5deg)';
-        textWrapper.style.bottom = '-120px';
-      }
     }
   }
 }

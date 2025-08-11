@@ -6,34 +6,13 @@ function sendEmail(event){
     const nameInput = document.getElementById("name");
     const emailInput = document.getElementById("email");
     const messageInput = document.getElementById("message");
-    const toast = document.getElementById("toast-notification");
-    const toastMessage = document.getElementById("toast-message");
     
     // Get submit button
     const submitBtn = document.querySelector('.contact .right-side form button');
     
-    // Function to show toast
-    function showToast(message, type) {
-        // Remove all possible classes first
-        toast.classList.remove('success', 'error', 'loading', 'show');
-        
-        // Add the appropriate class
-        toast.classList.add(type, 'show');
-        
-        // Set the message
-        toastMessage.textContent = message;
-        
-        // Hide the toast after a delay (except for loading state)
-        if (type !== 'loading') {
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 5000);
-        }
-    }
-    
     // Validate inputs
     if (!nameInput.value || !emailInput.value || !messageInput.value) {
-        showToast("Please fill in all fields", "error");
+        alert("Please fill in all fields");
         return;
     }
     
@@ -45,8 +24,8 @@ function sendEmail(event){
         time: new Date().toLocaleString()
     };
     
-    // Show sending status
-    showToast("Sending your message...", "loading");
+    // Show loading state on button
+    submitBtn.classList.add('loading');
     submitBtn.disabled = true;
     
     // Send the email
@@ -54,26 +33,52 @@ function sendEmail(event){
     .then(function(response) {
         console.log("SUCCESS!", response.status, response.text);
         
-        // Show success message
-        showToast("Message sent successfully!", "success");
-        
         // Reset form
         nameInput.value = "";
         emailInput.value = "";
         messageInput.value = "";
         
-        // Re-enable button after a delay
-        setTimeout(() => {
-            submitBtn.disabled = false;
-        }, 2000);
+        // Show thank you overlay
+        const thankYouOverlay = document.getElementById('thank-you-overlay');
+        if (thankYouOverlay) {
+            thankYouOverlay.classList.add('show');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+        
+        // Reset button state
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+        
     }, function(error) {
         console.log("FAILED...", error);
         
         // Show error message
-        showToast("Failed to send message. Please try again.", "error");
+        alert("Failed to send message. Please try again.");
         
-        // Re-enable button
+        // Reset button state
+        submitBtn.classList.remove('loading');
         submitBtn.disabled = false;
     });
 }
+
+// Handle thank you overlay close button
+document.addEventListener('DOMContentLoaded', function() {
+    const thankYouCloseBtn = document.getElementById('thank-you-close-btn');
+    const thankYouOverlay = document.getElementById('thank-you-overlay');
+    
+    if (thankYouCloseBtn && thankYouOverlay) {
+        thankYouCloseBtn.addEventListener('click', function() {
+            thankYouOverlay.classList.remove('show');
+            document.body.style.overflow = ''; // Re-enable scrolling
+        });
+        
+        // Also close when clicking outside the content
+        thankYouOverlay.addEventListener('click', function(e) {
+            if (e.target === thankYouOverlay) {
+                thankYouOverlay.classList.remove('show');
+                document.body.style.overflow = ''; // Re-enable scrolling
+            }
+        });
+    }
+});
  
